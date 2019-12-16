@@ -6,12 +6,19 @@ class Molecule {
         
         this.moleculeId = _moleculeId
         this.isFilled = false
+        this.colors = ['255, 0, 0', '0, 255, 0', '0, 0, 255']
     }
+
+    getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
     
     render() {
+        const randomColor = this.colors[this.getRandomInt(this.colors.length)]
         stroke(255,0,0);
         strokeWeight(0)
-        this.isFilled ? fill(255, 0, 0) : fill(0, 255, 0);
+
+        this.isFilled ? fill(randomColor) : fill(0, 255, 0);
         push()
             translate(this.position.x,this.position.y)
             ellipse(0, 0, this.radius*2, this.radius*2);
