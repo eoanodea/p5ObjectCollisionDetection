@@ -1,19 +1,22 @@
 class Molecule {
     constructor(_moleculeId){
-        this.position = createVector(random(width),random(height));
-        this.velocity = createVector(random(-2,2),random(-2,2));
+        this.radius = random(minRadius,maxRadius);
+        this.position = createVector(random(this.radius, width - this.radius * 2), random(this.radius, height - this.radius * 2));
+        this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
         
         this.moleculeId = _moleculeId
+        this.isFilled = false
     }
     
     render() {
         stroke(255,0,0);
-        strokeWeight(1)
-        fill(255,255,0);
+        strokeWeight(0)
+        this.isFilled ? fill(255, 0, 0) : fill(0, 255, 0);
         push()
             translate(this.position.x,this.position.y)
-            ellipse(0,0,10,10);
+            ellipse(0, 0, this.radius*2, this.radius*2);
         pop();
+        this.isFilled=false;
     }
     
     step() {

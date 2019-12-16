@@ -1,22 +1,34 @@
 let molecules = [];
 let moleculeKey = [];
-const numOfMolecules = 5;
-const canvasWidth = 400;
-const canvasHeight = 320;
-const numRows = 3, numCols = 3;
+const numOfMolecules = 10;
+const canvasWidth = 800;
+const canvasHeight = 600;
+let numRows = 6, numCols = 6;
+const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4;
 let colWidth, rowHeight;
-
+let numOfIntersections
+let gui;
 
 function setup() {
+    gui = new dat.GUI();
+    moleculeGUI = new Molecule
+    gui.add(moleculeGUI, 'isFilled')
     createCanvas(canvasWidth, canvasHeight);
     background(127);
-    
+    // noLoop();
+
     rowHeight = canvasHeight / numRows
     colWidth = canvasWidth / numCols
     
     for (let i = 0; i < numOfMolecules; i++) {
         molecules.push(new Molecule(i));
     }
+}
+
+function GUI() {
+    textSize(20);
+    fill("#FFF");
+    text("FPS: " + int(getFrameRate()), 10, 30);
 }
 
 //Return the fill color of a molecule
@@ -36,7 +48,7 @@ function splitIntoGrids() {
         
         currentCell = currentCellX + currentCellY
         //If the currentCell is greater or less than the array count
-        //The function breaks
+        //The breaks
         currentCell < moleculeKey.length && currentCell >= 0 
         && moleculeKey[currentCell].push(molecule.moleculeId);
     })
@@ -44,6 +56,7 @@ function splitIntoGrids() {
 
 function draw() {
     background(000);
+    GUI();
     drawGrid()
     mapMolecules();
     splitIntoGrids();
@@ -65,6 +78,7 @@ function mapMolecules() {
 function drawGrid() {
     for(let x = 0; x < canvasWidth; x+=colWidth) {
         for(let y = 0; y < canvasHeight; y+=rowHeight) {
+            strokeWeight(1)
             line(x, 0, x, height);
             line(0, y, width, y)
         }
@@ -72,23 +86,34 @@ function drawGrid() {
 }
 
 
-//Draws the grid based on parameters
+//Check MoloculeKeys array for intersections
 function checkIntersections() {
     //Loop through moleculeKey
-    for(let i = 0; i < moleculeKey.length; i++) {
-        let intersectingMolecules = []
-        //If length is greater than one it means 
-        //2 molecules are in the same grid
-        if(moleculeKey[i].length > 1) {
-            moleculeKey[i].forEach(key => {
-                //prints amount of molecules within one grid
-                //Pushes to array and dont know what to do after yet
-                console.log('yeehaw', key)
-                intersectingMolecules.push(key)
-            })
-        }
-        
-        console.log("Same grid: ", intersectingMolecules)
-    }
+    moleculeKey.forEach(key => {
+        for(let i = 0; i < key.length; i++) {
+            for (j = i + 1; j < key.length; j++) {
+                if (p5.Vector.sub(
+                    molecules[key[i]].position, 
+                    molecules[key[j]].position)
+                        .mag() < 
+                        molecules[key[i]].radius
+                            + molecules[key[j]].radius) {
+                    molecules[key[i]].isFilled = true;
+                    molecules[key[j]].isFilled = true;
+                }
+            }
+        }    
+    })
 }
+
+// }
+
+// window.onload = function() {
+//     const main = new Main();
+    // let gui = new dat.GUI();
+
+//     gui.add(main, 'numOfMolecules', 1, 100)
+//     gui.add(main, 'speed', -5, 5);
+ 
+// }
 
