@@ -11,19 +11,24 @@ class Molecule {
 
     getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
-      }
+    }
     
     render() {
-        const randomColor = this.colors[this.getRandomInt(this.colors.length)]
-        stroke(255,0,0);
+        let radiusAddOn = 0;
+        stroke(0,0,255,30);
         strokeWeight(0)
 
-        this.isFilled ? fill(randomColor) : fill(0, 255, 0);
+        if(this.isFilled) radiusAddOn = this.getRandomInt(maxRadius)
+
+        this.isFilled 
+            ? fill(random(255), random(255), random(255)) 
+            : fill(0, 255, 0, 100);
         push()
             translate(this.position.x,this.position.y)
-            ellipse(0, 0, this.radius*2, this.radius*2);
+            ellipse(0, 0, (this.radius*2 + radiusAddOn), (this.radius*2 + radiusAddOn));
         pop();
         this.isFilled=false;
+        
     }
     
     step() {
