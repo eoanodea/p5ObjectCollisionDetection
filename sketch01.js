@@ -12,9 +12,9 @@ let gui;
 function setup() {
     canvasWidth = windowWidth
     canvasHeight = windowHeight
-    gui = new dat.GUI();
-    moleculeGUI = new Molecule
-    gui.add(moleculeGUI, 'isFilled')
+    // gui = new dat.GUI();
+    // moleculeGUI = new Molecule
+    // gui.add(moleculeGUI, 'isFilled')
     createCanvas(canvasWidth, canvasHeight);
     background(127);
     // noLoop();
