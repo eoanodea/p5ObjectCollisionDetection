@@ -1,6 +1,6 @@
 let molecules = [];
 let moleculeKey = [];
-const numOfMolecules = 10;
+const numOfMolecules = 40;
 let canvasWidth = 800;
 let canvasHeight = 600;
 let numRows = 6, numCols = 6;
