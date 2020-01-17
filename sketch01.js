@@ -1,15 +1,17 @@
 let molecules = [];
 let moleculeKey = [];
 const numOfMolecules = 10;
-const canvasWidth = 800;
-const canvasHeight = 600;
+let canvasWidth = 800;
+let canvasHeight = 600;
 let numRows = 6, numCols = 6;
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4;
 let colWidth, rowHeight;
-let numOfIntersections
+let numOfIntersections = 0;
 let gui;
 
 function setup() {
+    canvasWidth = windowWidth
+    canvasHeight = windowHeight
     gui = new dat.GUI();
     moleculeGUI = new Molecule
     gui.add(moleculeGUI, 'isFilled')
@@ -29,6 +31,7 @@ function GUI() {
     textSize(20);
     fill("#FFF");
     text("FPS: " + int(getFrameRate()), 10, 30);
+    text("Intersections: " + numOfIntersections, 10, 60);
 }
 
 //Return the fill color of a molecule
@@ -88,6 +91,7 @@ function drawGrid() {
 
 //Check MoloculeKeys array for intersections
 function checkIntersections() {
+    numOfIntersections = 0;
     //Loop through moleculeKey
     moleculeKey.forEach(key => {
         for(let i = 0; i < key.length; i++) {
@@ -100,6 +104,7 @@ function checkIntersections() {
                             + molecules[key[j]].radius) {
                     molecules[key[i]].isFilled = true;
                     molecules[key[j]].isFilled = true;
+                    numOfIntersections++;
                 }
             }
         }    
