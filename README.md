@@ -1,4 +1,4 @@
-# Molecule Collision Detechtion using p5.js
+# Molecule Collision Detection using p5.js
 
 This module creates a series of Molecules within a grid. The molecules can move around the grid, and can detect when they intersect with eachother.
 
